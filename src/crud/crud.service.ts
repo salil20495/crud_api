@@ -1,27 +1,40 @@
-import { Injectable, Post } from '@nestjs/common';
-import {jobschema} from './employee.schema'
-import {employeeModel} from './employee.interface'
-import {model, Model} from 'mongoose'
+import { Injectable } from '@nestjs/common';
+import {model,Model} from 'mongoose'
 import {InjectModel} from '@nestjs/mongoose'
+import {studentschema} from './crud.model'
+import {studentmodel} from './crud.model'
 @Injectable()
 export class CrudService {
-    //constructor(@InjectModel('employee') private readonly jobmodel:Model<employeeModel>){}
-    constructor(@InjectModel('employee') private readonly Model<employeeModel>){}
- async add(a:number,b:number,c:number):Promise<number>{
-        var sum=a*b*c;
-        return sum
+    //constructor(injectModel('student') private readonly  studentmodel:Model<studentinterface>){}
+    constructor(@InjectModel('student') private readonly student:Model<studentmodel>){}
+    async insert(name:string,std:string,rollno:string,section:string){
+        const add_student=new this.student({name,std,rollno,section})
+        await add_student.save();
+        return "data saved successfully"
     }
-    async multiply(...mul:number[]){
-        var i;
-        var data:number=1;
-        for(i=0;i<=mul.length;i++){
-            var res=data*mul[i];
+    async fetch(){
+        const get_student=this.student.find().exec()
+        return get_student
+    }
+    async find(rollno): Promise<studentmodel[]> {
+        return await this.student.find({name:rollno.name}).exec();
+    }
+    async update(id,datamodel):Promise<studentmodel>{
+        const result= await this.student.findByIdAndUpdate(id,datamodel)
+        if(result){
+            return result
         }
-        return res;
+        else{
+            console.log("error")
+            
+        }
     }
-    async insert(name:string,designation:string,technology:string,salary:number){
-        const add_employee=new this.jobmodel(name)
-        await add_employee.save();
-        return "data added successfully"
+    // async delete(id){
+    //     const student_dlt=this.student.findByIdAndRemove(id)
+    //     return "entry deleted successfully"
+    // }
+    async delete(id){
+        const delete_data=this.student.deleteOne({name:id.name})
+        return "entry deleted successfully"
     }
 }

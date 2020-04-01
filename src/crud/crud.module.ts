@@ -1,12 +1,16 @@
+import {studentmodel} from './crud.model'
 import { Module } from '@nestjs/common';
 import { CrudController } from './crud.controller';
 import { CrudService } from './crud.service';
-import {employeeModel} from './employee.interface'
-import {jobschema} from './employee.schema'
 import {MongooseModule} from '@nestjs/mongoose'
+import {studentschema} from './crud.model'
+import * as mongoose from 'mongoose'
+import {model,Model} from 'mongoose'
 
 @Module({
-    imports:[CrudModule,MongooseModule.forFeature([{name:"employee",schema:"jobschema",collection:"employee"}])],
+    imports:[CrudModule,MongooseModule.forFeature([{
+        name:'student',schema:studentschema,collection:"students"
+    }])],
     controllers:[CrudController],
     providers:[CrudService]
 })
