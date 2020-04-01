@@ -20,14 +20,7 @@ export class CrudService {
         return await this.student.find({name:rollno.name}).exec();
     }
     async update(id,datamodel):Promise<studentmodel>{
-        const result= await this.student.findByIdAndUpdate(id,datamodel)
-        if(result){
-            return result
-        }
-        else{
-            console.log("error")
-            
-        }
+        return await this.student.findByIdAndUpdate(id,datamodel)
     }
     // async delete(id){
     //     const student_dlt=this.student.findByIdAndRemove(id)
