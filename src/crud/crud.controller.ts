@@ -14,15 +14,15 @@ export class CrudController {
     fetch(){
         return this.crudservice.fetch();
     }
-    @Get('fetch_one/"rollno')
-    fetch_one(@Param()rollno): Promise<studentmodel[]>{
-        return this.crudservice.find(rollno)
+    @Get('fetch_one/:id')
+    fetch_one(@Param('id')id): Promise<studentmodel>{
+        return this.crudservice.find_one(id)
     }
-    @Put(':id')
-    update(@Param('id')id:string,@Body()datamodel:studentmodel){
+    @Put('update/:id')
+    update(@Param('id')id,@Body()datamodel:studentmodel){
         return this.crudservice.update(id,datamodel)
     }
-    @Delete("delete:id")
+    @Delete("delete/:id")
     delete(@Param('id')id){
         return this.crudservice.delete(id)
     }
